@@ -1,0 +1,33 @@
+services:
+  aggregator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: uts-aggregator
+    ports:
+      - "8080:8080"
+    environment:
+      - DATA_DIR=/app/data
+    volumes:
+      - ./data:/app/data
+
+  publisher:
+    image: curlimages/curl:8.8.0
+    container_name: uts-publisher
+    depends_on:
+      - aggregator
+    command:
+      - sh
+      - -c
+      - |
+        echo "Waiting aggregator...";
+        sleep 2;
+        curl -s -X POST http://aggregator:8080/publish \
+          -H 'Content-Type: application/json' \
+          -d '[
+            {"topic":"compose","event_id":"evt-1","timestamp":"2026-04-25T10:00:00","source":"publisher","payload":{"msg":"hello"}},
+            {"topic":"compose","event_id":"evt-1","timestamp":"2026-04-25T10:00:01","source":"publisher","payload":{"msg":"retry duplicate"}},
+            {"topic":"compose","event_id":"evt-2","timestamp":"2026-04-25T10:00:02","source":"publisher","payload":{"msg":"unique"}}
+          ]';
+        echo;
+        curl -s http://aggregator:8080/stats;

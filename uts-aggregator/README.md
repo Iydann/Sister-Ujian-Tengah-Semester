@@ -41,7 +41,6 @@ Implementasi menggunakan FastAPI, consumer async berbasis queue, dan SQLite seba
 |  |- main.py        # FastAPI app + endpoint + startup/shutdown
 |  |- consumer.py    # Background consumer async
 |  |- dedup.py       # SQLite dedup store + query events/topics
-|  |- storage.py     # In-memory storage sederhana (tidak dipakai jalur utama)
 |  |- models.py      # Pydantic event model
 |- tests/
 |  |- test_app.py    # Unit/integration style tests endpoint dan dedup
@@ -156,6 +155,7 @@ Cakupan test saat ini mencakup:
 - stats consistency,
 - topic-scoped dedup,
 - persistence dedup setelah restart app.
+- stress batch 120 event dengan ~20% duplikasi dan assert waktu eksekusi wajar.
 
 ## Menjalankan Dengan Docker
 
@@ -177,6 +177,26 @@ Keterangan:
 - Volume `-v $(pwd)/data:/app/data` memastikan database SQLite tetap persisten di host.
 - Aplikasi membaca lokasi data dari env var `DATA_DIR` (default ke `data`).
 
+## Menjalankan Dengan Docker Compose (Bonus)
+
+Project ini juga menyertakan `docker-compose.yml` dengan 2 service lokal:
+
+- `aggregator`: service utama FastAPI,
+- `publisher`: simulator publisher yang mengirim event (termasuk duplicate) ke aggregator.
+
+Jalankan:
+
+```bash
+docker compose up --build
+```
+
+Lalu cek endpoint dari host:
+
+```bash
+curl "http://localhost:8080/stats"
+curl "http://localhost:8080/events?topic=compose"
+```
+
 ## Catatan Implementasi Terhadap Rubrik UTS
 
 - Pub-Sub style pipeline: terpenuhi (publish -> queue -> consumer).
@@ -185,15 +205,16 @@ Keterangan:
 - API wajib (`/publish`, `/events`, `/stats`): terpenuhi.
 - Unit test minimal 5: terpenuhi (lebih dari 5).
 - Dockerfile: tersedia dan runnable.
+- Stress test kecil dengan duplikasi: terpenuhi.
+- Docker Compose bonus (2 service lokal): tersedia.
 
 ## Potensi Pengembangan Lanjutan
 
-- Tambah load/performance test (misalnya 5.000 event dengan >=20% duplikat).
+- Tambah load/performance test skala besar (misalnya 5.000 event dengan >=20% duplikat).
 - Tambah endpoint healthcheck dan metrics format Prometheus.
 - Tambah CI pipeline untuk lint + test otomatis.
 
 ## Author
 
-Nama: [Isi Nama Kamu]
-
-NIM: [Isi NIM Kamu]
+Nama: Abdullah Adiwarman Wildan
+NIM: 11231001

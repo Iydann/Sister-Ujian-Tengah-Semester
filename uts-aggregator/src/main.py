@@ -1,25 +1,16 @@
 import asyncio
 import logging
 from datetime import datetime
-from typing import Dict, List, Union
+from typing import List, Union
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 
 from src.consumer import Consumer
-
 from src.dedup import DedupStore
+from src.models import Event
 
 logger = logging.getLogger("aggregator")
 logging.basicConfig(level=logging.INFO)
-
-
-class Event(BaseModel):
-    topic: str
-    event_id: str
-    timestamp: datetime
-    source: str
-    payload: Dict
 
 def create_app() -> FastAPI:
     app = FastAPI()

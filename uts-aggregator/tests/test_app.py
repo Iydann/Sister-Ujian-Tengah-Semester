@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+import time
 import pytest
 
 
@@ -126,3 +127,45 @@ def test_dedup_persists_after_restart(tmp_path, monkeypatch):
         c2.post("/publish", json=[event])
         stats2 = c2.get("/stats").json()
         assert stats2["duplicate_dropped"] == 1
+
+
+def test_stress_batch_120_events_with_20_percent_duplicates(client):
+    total_events = 120
+    duplicate_count = 24
+    unique_count = total_events - duplicate_count
+
+    payload_template = {
+        "timestamp": "2026-04-25T10:00:00",
+        "source": "stress-test",
+        "payload": {"kind": "batch"}
+    }
+
+    events = []
+    for i in range(unique_count):
+        events.append({
+            "topic": "stress",
+            "event_id": f"u-{i}",
+            **payload_template,
+        })
+
+    for i in range(duplicate_count):
+        events.append({
+            "topic": "stress",
+            "event_id": f"u-{i}",
+            **payload_template,
+        })
+
+    started = time.perf_counter()
+    res = client.post("/publish", json=events)
+    elapsed = time.perf_counter() - started
+
+    assert res.status_code == 200
+    assert elapsed < 5.0
+
+    stats = client.get("/stats").json()
+    assert stats["received"] == total_events
+    assert stats["unique_processed"] == unique_count
+    assert stats["duplicate_dropped"] == duplicate_count
+
+    stored = client.get("/events?topic=stress").json()
+    assert len(stored) == unique_count
