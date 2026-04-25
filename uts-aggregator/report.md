@@ -1,10 +1,9 @@
 # Laporan UTS — Pub-Sub Log Aggregator dengan Idempotent Consumer dan Deduplication
 
-**Nama:** [Isi Nama]  
-**NIM:** [Isi NIM]  
-**Kelas:** [Isi Kelas]  
-**Mata Kuliah:** Sistem Terdistribusi dan Parallel  
-**Tanggal:** 25 April 2026  
+**Nama:** Abdullah Adiwarman Wildan  
+**NIM:** 11231001  
+**Kelas:** A  
+**Mata Kuliah:** Sistem Terdistribusi dan Parallel
 
 ---
 
@@ -14,9 +13,8 @@
 2. [Bagian Teori (T1–T8)](#2-bagian-teori-t1t8)
 3. [Keputusan Desain Implementasi](#3-keputusan-desain-implementasi)
 4. [Analisis Performa dan Metrik](#4-analisis-performa-dan-metrik)
-5. [Keterkaitan ke Bab 1–7](#5-keterkaitan-ke-bab-17)
-6. [Checklist Submission](#6-checklist-submission)
-7. [Daftar Pustaka](#7-daftar-pustaka)
+5. [Link Pelengkap Dokumen](#6-link-pelengkap-dokumen)
+6. [Daftar Pustaka](#7-daftar-pustaka)
 
 ---
 
@@ -278,36 +276,16 @@ Semua 8 skenario lulus, termasuk persistence setelah restart dan validasi schema
 
 ---
 
-## 5. Keterkaitan ke Bab 1–7
+## 5. Link Pelengkap Dokumen
 
-| Bab | Konsep | Penerapan pada Sistem |
-|---|---|---|
-| Bab 1 | Karakteristik & Trade-off | Transparansi, skalabilitas, fault tolerance pada Pub-Sub aggregator |
-| Bab 2 | Arsitektur | Pola Pub-Sub dipilih atas client-server untuk loose coupling dan asinkronisitas |
-| Bab 3 | Komunikasi | At-least-once delivery → idempotent consumer wajib untuk menghindari duplikasi efek |
-| Bab 4 | Penamaan | Skema topic + UUID v4 event_id untuk collision-resistant composite dedup key |
-| Bab 5 | Waktu & Ordering | Total ordering tidak diperlukan; timestamp ISO 8601 per event sudah memadai |
-| Bab 6 | Fault Tolerance | Persistent dedup store, retry handling, crash recovery via Docker volume mount |
-| Bab 7 | Konsistensi | Eventual consistency dicapai melalui idempotency + dedup store yang durable |
+| Kebutuhan | Link |
+|---|---|
+| Github | https://github.com/Iydann/Sister-Ujian-Tengah-Semester |
+| Video Demo | https://www.youtube.com/watch?v=Z-6tquBL5gw |
 
 ---
 
-## 6. Checklist Submission
-
-| Item | Status | Keterangan |
-|---|---|---|
-| Source code (`src/`) | ✅ Selesai | main.py, consumer.py, dedup.py, models.py |
-| Unit tests (`tests/`) | ✅ Selesai | 8 test skenario di tests/test_app.py |
-| requirements.txt | ✅ Selesai | fastapi, uvicorn, pydantic, pytest, httpx |
-| Dockerfile | ✅ Selesai | python:3.11-slim, non-root user, dependency caching |
-| docker-compose.yml | ✅ Selesai | 2 service: aggregator + publisher simulator |
-| README.md | ✅ Selesai | Instruksi build/run, endpoint, arsitektur, contoh curl |
-| Laporan (report.md) | ✅ Selesai | Dokumen ini |
-| Video demo YouTube | ⏳ Pending | [Isi link video setelah upload] |
-
----
-
-## 7. Daftar Pustaka
+## 6. Daftar Pustaka
 
 Tanenbaum, A. S., & Van Steen, M. (2007). *Distributed systems: Principles and paradigms* (2nd ed.). Prentice Hall.
 

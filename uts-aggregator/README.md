@@ -229,4 +229,13 @@ curl "http://localhost:8080/events?topic=compose"
 ## Author
 
 Nama: Abdullah Adiwarman Wildan
+
 NIM: 11231001
+
+## Link Pelengkap Dokumen
+
+Link Video Demo: https://www.youtube.com/watch?v=Z-6tquBL5gw
+
+Link Github: https://github.com/Iydann/Sister-Ujian-Tengah-Semester
+
+
