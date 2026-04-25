@@ -13,8 +13,8 @@
 2. [Bagian Teori (T1–T8)](#2-bagian-teori-t1t8)
 3. [Keputusan Desain Implementasi](#3-keputusan-desain-implementasi)
 4. [Analisis Performa dan Metrik](#4-analisis-performa-dan-metrik)
-5. [Link Pelengkap Dokumen](#6-link-pelengkap-dokumen)
-6. [Daftar Pustaka](#7-daftar-pustaka)
+5. [Link Pelengkap Dokumen](#5-link-pelengkap-dokumen)
+6. [Daftar Pustaka](#6-daftar-pustaka)
 
 ---
 
