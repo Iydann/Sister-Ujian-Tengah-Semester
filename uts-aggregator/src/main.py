@@ -52,7 +52,6 @@ def create_app() -> FastAPI:
         for event in batch:
             await app.state.queue.put(event)
 
-        # Tunggu sampai batch diproses agar test dan observability konsisten.
         await app.state.queue.join()
 
         return {"status": "accepted", "count": len(batch)}

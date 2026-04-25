@@ -5,7 +5,6 @@ import json
 
 class DedupStore:
     def __init__(self):
-        # DETEKSI ENVIRONMENT
         data_dir = os.getenv("DATA_DIR", "data")  # fallback lokal
 
         os.makedirs(data_dir, exist_ok=True)
