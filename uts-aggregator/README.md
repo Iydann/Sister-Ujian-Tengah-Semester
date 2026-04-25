@@ -209,20 +209,20 @@ curl "http://localhost:8080/stats"
 curl "http://localhost:8080/events?topic=compose"
 ```
 
-## Catatan Implementasi Terhadap Rubrik UTS
+## Catatan Checklist saya
 
-- Pub-Sub style pipeline: terpenuhi (publish -> queue -> consumer).
-- Idempotent consumer + dedup `(topic, event_id)`: terpenuhi.
-- Persistence setelah restart: terpenuhi (SQLite file).
-- API wajib (`/publish`, `/events`, `/stats`): terpenuhi.
-- Unit test minimal 5: terpenuhi (lebih dari 5).
-- Dockerfile: tersedia dan runnable.
-- Stress test kecil dengan duplikasi: terpenuhi.
-- Docker Compose bonus (2 service lokal): tersedia.
+- Pub-Sub style pipeline: sudah (publish -> queue -> consumer).
+- Idempotent consumer + dedup `(topic, event_id)`: sudah.
+- Persistence setelah restart: sudah (SQLite file).
+- API wajib (`/publish`, `/events`, `/stats`): sudah.
+- Unit test minimal 5: sudah (lebih dari 5 malah).
+- Dockerfile: sudah dan runnable.
+- Stress test kecil dengan duplikasi: sudah.
+- Docker Compose bonus (2 service lokal): sudah.
 
 ## Potensi Pengembangan Lanjutan
 
-- Tambah load/performance test skala besar (misalnya 5.000 event dengan >=20% duplikat).
+- Mungkin bisa dengan Tambah load/performance test skala besar (misalnya 5.000 event dengan >=20% duplikat).
 - Tambah endpoint healthcheck dan metrics format Prometheus.
 - Tambah CI pipeline untuk lint + test otomatis.
 
