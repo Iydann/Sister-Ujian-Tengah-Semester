@@ -47,12 +47,24 @@ Implementasi menggunakan FastAPI, consumer async berbasis queue, dan SQLite seba
 |- data/
 |  |- events.db      # SQLite database (persisted)
 |- Dockerfile
+|- docker-compose.yml
 |- requirements.txt
 |- README.md
+
 ```
 
 ## Event Schema
-
+son
+{
+	"topic": "orders",
+	"event_id": "evt-001",
+	"timestamp": "2026-04-25T10:00:00",
+	"source": "web",
+	"payload": {
+		"order_id": 123,
+		"amount": 150000
+	}
+}
 Body event yang valid:
 
 ```json
